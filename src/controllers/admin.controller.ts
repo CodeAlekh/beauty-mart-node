@@ -3,6 +3,7 @@ import * as adminService from "../services/admin.service.ts";
 import {
   createBrandSchema,
   createCategorySchema,
+  createProductVariantSchema,
   productCreateSchema,
 } from "../schema/admin.schema.ts";
 
@@ -22,4 +23,11 @@ export async function addProduct(req: Request, res: Response) {
   const body = productCreateSchema.parse(req.body);
   const product = await adminService.createProduct(body);
   res.json({ data: product });
+}
+
+export async function addProductVariant(req: Request, res: Response) {
+  const body = createProductVariantSchema.parse(req.body);
+  const producId = req.params.productId;
+  const variant = await adminService.addProductVariant(Number(producId), body);
+  res.json({ data: variant });
 }

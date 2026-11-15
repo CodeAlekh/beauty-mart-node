@@ -2,10 +2,16 @@ import type {
   AddProductInput,
   CreateBrandInput,
   CreateCategoryInput,
+  CreateProductVariantInput,
 } from "../schema/admin.schema.ts";
 import * as categoryRepository from "../repositories/category.repository.ts";
 import * as productRepository from "../repositories/product.repository.ts";
-import type { Brand, Category } from "../generated/prisma/client.ts";
+import * as productVariantRepository from "../repositories/productVariant.repository.ts";
+import type {
+  Brand,
+  Category,
+  ProductVariant,
+} from "../generated/prisma/client.ts";
 
 export async function createCategory(
   categoryInput: CreateCategoryInput,
@@ -21,4 +27,14 @@ export async function createBrand(body: CreateBrandInput): Promise<Brand> {
 
 export async function createProduct(productInput: AddProductInput) {
   return await productRepository.insertProduct(productInput);
+}
+
+export async function addProductVariant(
+  productId: number,
+  variant: CreateProductVariantInput,
+): Promise<ProductVariant> {
+  return await productVariantRepository.insertProductVariant(
+    productId,
+    variant,
+  );
 }
