@@ -1,7 +1,8 @@
 import z from "zod";
 
-const basicStringSchema = z.string().trim().min(1).max(100);
+export const basicStringSchema = z.string().trim().min(1).max(100);
 const basicStringArraySchema = z.array(basicStringSchema).max(10);
+export const idSchema = z.coerce.number().int().positive();
 
 export const createCategorySchema = z.object({
   name: basicStringSchema,
@@ -33,7 +34,7 @@ export const productCreateSchema = z.object({
 
 export type AddProductInput = z.infer<typeof productCreateSchema>;
 
-const moneySchema = z
+export const moneySchema = z
   .number()
   .min(0.01)
   .max(999_999.99)
@@ -52,5 +53,6 @@ export const createProductVariantSchema = z
     error: "mrp must be greater or equal to price",
   });
 
-export type CreateProductVariantInput = z.infer<typeof createProductVariantSchema>;
-
+export type CreateProductVariantInput = z.infer<
+  typeof createProductVariantSchema
+>;

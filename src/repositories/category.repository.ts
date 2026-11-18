@@ -14,3 +14,22 @@ export async function insertCategory(
 export async function insertBrand(body: CreateBrandInput): Promise<Brand> {
   return await prisma.brand.create({ data: body });
 }
+
+export async function listCategories(): Promise<any> {
+  const countProductQuery = {
+    // select: { products: { where: { productVariants: { some: {} } } } },
+    select: { products: {} },
+  };
+  const val = await prisma.category.findMany({
+    select: { id: true, name: true, slug: true, _count: countProductQuery },
+  });
+  const returingVal = val.map((x) => {
+    return {
+      id: x.id,
+      name: x.name,
+      slug: x.slug,
+      productCount: x._count.products,
+    };
+  });
+  return returingVal;
+}
