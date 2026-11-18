@@ -5,6 +5,7 @@ import { errorHandler } from "./middlewares/errorHandler.ts";
 import { prisma } from "./config/prisma.ts";
 import { adminRouter } from "./routes/admin.routes.ts";
 import { productRouter } from "./routes/product.routes.ts";
+import { catalogRouter } from "./routes/catalog.routes.ts";
 
 const app = express();
 app.use(express.json());
@@ -16,6 +17,7 @@ app.get("/", (req, res) => {
 //Route to admin endpoints
 app.use("/admin", adminRouter);
 app.use("/product", productRouter);
+app.use("/catalog", catalogRouter);
 
 app.use(notFound);
 app.use(errorHandler);

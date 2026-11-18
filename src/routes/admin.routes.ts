@@ -3,6 +3,7 @@ import {
   addBrand,
   addCategory,
   addProduct,
+  addProductVariant,
 } from "../controllers/admin.controller.ts";
 
 export const adminRouter = Router();
@@ -10,3 +11,4 @@ export const adminRouter = Router();
 adminRouter.post("/category", addCategory);
 adminRouter.post("/brand", addBrand);
 adminRouter.post("/product", addProduct);
+adminRouter.post("/product/:productId/variant", addProductVariant);

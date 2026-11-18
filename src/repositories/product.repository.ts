@@ -24,6 +24,18 @@ export async function insertProduct(product: AddProductInput) {
 export async function getAllProduct() {
   return prisma.product.findMany({
     orderBy: { createdAt: "desc" },
-    include: { images: true },
+    include: { images: true, productVariants: true },
+  });
+}
+
+export async function updateStartingPrice(productId: number) {
+  const x = await prisma.productVariant.findFirst({
+    where: { productId: productId },
+    orderBy: { price: "asc" },
+  });
+  const minPrice = x?.price ?? 0;
+  await prisma.product.update({
+    where: { id: productId },
+    data: { startingPrice: minPrice },
   });
 }

@@ -1,7 +1,8 @@
 import z from "zod";
 
-const basicStringSchema = z.string().trim().min(1).max(100);
+export const basicStringSchema = z.string().trim().min(1).max(100);
 const basicStringArraySchema = z.array(basicStringSchema).max(10);
+export const idSchema = z.coerce.number().int().positive();
 
 export const createCategorySchema = z.object({
   name: basicStringSchema,
@@ -32,3 +33,26 @@ export const productCreateSchema = z.object({
 });
 
 export type AddProductInput = z.infer<typeof productCreateSchema>;
+
+export const moneySchema = z
+  .number()
+  .min(0.01)
+  .max(999_999.99)
+  .multipleOf(0.01, { error: "Price must be upto 2 decimal places" });
+
+export const createProductVariantSchema = z
+  .object({
+    label: basicStringSchema,
+    mrp: moneySchema,
+    price: moneySchema,
+    stock: z.int().min(0),
+    code: basicStringSchema,
+    images: z.array(imageSchema),
+  })
+  .refine((obj) => obj.price <= obj.mrp, {
+    error: "mrp must be greater or equal to price",
+  });
+
+export type CreateProductVariantInput = z.infer<
+  typeof createProductVariantSchema
+>;
