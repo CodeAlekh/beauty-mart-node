@@ -3,7 +3,9 @@ import { basicStringSchema, idSchema, moneySchema } from "./admin.schema.ts";
 
 export const productFilterSchema = z
   .object({
+    id: idSchema.optional(),
     category: idSchema.optional(),
+    categorySlug: basicStringSchema.optional(),
     brand: idSchema.optional(),
     skinType: basicStringSchema.optional(),
     concern: basicStringSchema.optional(),

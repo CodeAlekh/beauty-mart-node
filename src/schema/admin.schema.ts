@@ -34,7 +34,7 @@ export const productCreateSchema = z.object({
 
 export type AddProductInput = z.infer<typeof productCreateSchema>;
 
-export const moneySchema = z
+export const moneySchema = z.coerce
   .number()
   .min(0.01)
   .max(999_999.99)
