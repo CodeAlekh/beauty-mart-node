@@ -27,9 +27,9 @@ export async function filterProducts(query: ProductFilterQuery) {
     //     (a, b) => a.price.toNumber() - b.price.toNumber(),
     //   )[0] ?? null;
 
-    const cheapestVariant = x.productVariants.reduce((best, variant) => {
-      if (best.price.toNumber() < variant.price.toNumber()) {
-        return best;
+    const cheapestVariant = x.productVariants.reduce((cheapest, variant) => {
+      if (cheapest.price.toNumber() < variant.price.toNumber()) {
+        return cheapest;
       } else {
         return variant;
       }
