@@ -1,6 +1,9 @@
 import type { Request, Response } from "express";
 import * as productService from "../services/product.service.ts";
-import { productFilterSchema } from "../schema/product.schema.ts";
+import {
+  productFilterSchema,
+  type ProductCardResponse,
+} from "../schema/product.schema.ts";
 
 export async function getAllProducts(req: Request, res: Response) {
   const products = await productService.getAllProducts();
@@ -10,5 +13,5 @@ export async function getAllProducts(req: Request, res: Response) {
 export async function filterProducts(req: Request, res: Response) {
   const query = productFilterSchema.parse(req.query);
   const products = await productService.filterProducts(query);
-  res.json({ data: products });
+  res.json(products);
 }
